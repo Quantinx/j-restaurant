@@ -84,7 +84,7 @@ async function setupViewer(){
 
     viewer.renderer.refreshPipeline()
 
-    await manager.addFromPath("./assets/drill3.glb")
+    await manager.addFromPath("./assets/scene.glb")
 
     const drillMaterial = manager.materials!.findMaterialsByName('Drill_01')[0] as MeshBasicMaterial2
 
@@ -109,12 +109,18 @@ async function setupViewer(){
         // FIRST SECTION
 
         tl
-        .to(position, {x: isMobile ? -6.0 : 1.56, y: isMobile ?  5.5 :  -2.26, z: isMobile ? -3.3 :  -3.85,
+        .to(position, {x: isMobile ? -6.0 : 1.56, y: isMobile ?  5.5 :  -2.26, z: isMobile ? -3.3 :  2.5,
             scrollTrigger: {
                 trigger: ".second",
                 start:"top bottom",
                 end: "top top", scrub: true,
-                immediateRender: false
+                immediateRender: false,
+                onUpdate: function(self) {
+                    // Calculate the percentage of scrub completion
+                    const percentScrubCompleted = self.progress * 100;
+                    console.log("Scrub progress:", percentScrubCompleted.toFixed(2) + "%");
+                }
+                
         }, onUpdate})
 
         .to(".section--one--container", { xPercent:'-150' , opacity:0,
@@ -134,7 +140,7 @@ async function setupViewer(){
 
         // LAST SECTION
 
-        .to(position, {x: -3.4, y: 9.6, z: 1.71,
+        .to(position, {x: 2, y: 0, z: 10,
             scrollTrigger: {
                 trigger: ".third",
                 start:"top bottom",
@@ -142,7 +148,7 @@ async function setupViewer(){
                 immediateRender: false
         }, onUpdate})
 
-        .to(target, {x: -1.5, y: 2.13 , z: -0.4,
+        .to(target, {x: -2, y: 0 , z: 0,
             scrollTrigger: {
                 trigger: ".third",
                 start:"top bottom",
